@@ -10,8 +10,9 @@
         html, body {
             margin: 0;
             padding: 0;
-            /*width: 100%;
-            overflow-x:hidden;*/
+            /*overflow-x: none;*/
+            width: 100%;
+            overflow-x:hidden;
         }
 
 
@@ -27,12 +28,79 @@
             /* Flexbox ensures the text is perfectly centered vertically and horizontally */
             display: flex;
             align-items: center;
+            text-align:center;
             justify-content: center;
             width: 100%;
-            height: 60px;
+            min-height: 45px;
+            /*padding: 10px 0;*/
+            margin: 0;
+            position: relative;
         }
 
+        .announcement-text{
+            font-size: 15px; /*Default for mobile*/
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+            text-align: center;
+            margin:0;
+        }
+
+        /* Tablet and Desktop adjustments */
+        @media (min-width: 992px) {
+            .bg-color {
+                height: 50px; /* Return to fixed height on larger screens */
+            }
+            .announcement-text {
+                font-size: 15px;
+                font-weight: 500;
+                letter-spacing: 1px;
+                line-height: 1.2;
+                padding: 5px 20px;
+                white-space: nowrap;
+            }
+        }
+
+/* Optional: Extra sharpness for very large screens */
+@media (min-width: 992px) {
+    .announcement-text {
+        font-size: 16px;
+    }
+}
+
+
+
 /*2nd NAV-BAR WHICH HAVE ICONS AND MUJI ICON*/
+
+.mega-menu{ /* Mobile-First Mega Menu Logic */
+    display: none;
+    background-color: #fff;
+    width: 100%;
+}
+
+/* On Desktop (992px and up) */
+@media (min-width: 992px) {
+    .muji-dropdown {
+        position: static;
+    }
+
+    .mega-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1000;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #ddd;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+    }
+
+    /* Hover Logic */
+/* Show on Hover only for Desktop */
+.muji-dropdown:hover .mega-menu {
+    display: block;
+}
+}
+
         .icon-group img, .gap-4 img{
             transition: opacity 0.2s ease;
         }
@@ -50,7 +118,6 @@
         }
 
 
-
 /* Brand Typography */
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -66,13 +133,34 @@ body {
 .nav-link {
     align-items: center;
     display: flex;
-    font-size: 12px;
-    font-weight: 500;
+    font-size: 10px;
+    font-weight: 5;
     padding-left: 15px;
     padding-right: 15px;
-    color: #000000;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     white-space: nowrap;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/* Mobile Adjustments (Below 992px) */
+@media (max-width: 991px) {
+    .mega-menu {
+        position: relative;
+        box-shadow: none;
+        padding-left: 1rem;
+    }
+    
+    /* Optional: Show menu items when clicking in mobile */
+    .collapse.show .mega-menu {
+        display: block; 
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 0;
+        border-bottom: 1px solid #f8f8f8;
+    }
 }
 
 .nav-link i{
@@ -83,7 +171,7 @@ body {
 
 .navbar-nav{
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-items: center;
 }
 
@@ -119,11 +207,6 @@ body {
     border-top: 1px solid #eee;
     border-bottom: 1px solid #ddd;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-/* Hover Logic */
-.muji-dropdown:hover .mega-menu {
-    display: block;
 }
 
 /* Search Bar Styling */
@@ -175,6 +258,7 @@ body {
     width: 100%;
     line-height: 0; /* Prevents tiny gaps at the bottom of the video */
     cursor: pointer;
+    overflow: hidden;
 }
 
 .video-container-top video{
@@ -197,18 +281,26 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.8); /* Starts slightly smaller */
+    transform: translate(-50%, -50%) scale(0.7); /* Starts slightly smaller */
     opacity: 0; /* Hidden by default */
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);/*ease-in-out;*/
     pointer-events: none;
-    z-index: 10;
+    z-index: 5;
 }
 
 /* Reveal on Hover */
-.video-container-top:hover .video-overlay-controls {
+.video-container-top:hover .video-overlay-controls
+.video-container-top:active .video-overlay-controls {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1); /* Pops to full size */
     pointer-events: auto;
+}
+
+/* Tablet & Laptop (1024px) Adjustments */
+@media (min-width: 768px) {
+    .video-overlay-controls {
+        transform: translate(-50%, -50%) scale(1); /* Full size on larger screens */
+    }
 }
 
 /* The translucent outer circle */
@@ -221,6 +313,13 @@ body {
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(5px); /* Frosted glass look */
+}
+
+@media (min-width: 1024px) {
+    .outer-ring {
+        width: 85px; /* Larger on Laptop */
+        height: 85px;
+    }
 }
 
 /* The solid inner button */
@@ -236,6 +335,13 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: background 0.2s ease;
+}
+
+@media (min-width: 1024px) {
+    .inner-btn {
+        width: 60px;
+        height: 60px;
+    }
 }
 
 .inner-btn:hover {
@@ -760,12 +866,14 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
 
 
 
-<div class="top-two-nav sticky-top bg-white shadow-sm">
+<div class="top-nav-container w-100 top-two-nav sticky-top bg-white shadow-sm">
     <div class="bg-color">
-        <p class="announcement-text text-center w-100 container-fluid container-fluid px-3 px-md-4 px-lg-5">
+        <div class="container-fluid p-0">
+        <p class="announcement-text mb-0">
             Register with us and enjoy FLAT 10% OFF* on your first order with coupon code: MUJIISHERE *T&C Apply
         </p>
     </div>
+</div>
     <!-- <nav class="navbar navbar-expand navbar-light bg-white border-bottom py-2">
         <div class="container-fulid px-2 px-md-4"></div>
     </nav> -->
@@ -774,22 +882,26 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-<nav class="navbar navbar-expand navbar-light bg-white border-bottom py-3 container-fulid px-3 px-md-4 px-lg-5">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3">
     <div class="container-fluid px-3 px-md-4 px-lg-5">
         
         <a class="navbar-brand me-4" href="#">
-            <img src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/company/5234/applications/64b0e3acd9cab4c83a10d8f5/application/pictures/free-logo/original/xKxNTymSJ-MUJI-India.png" alt="" style="height: 40px;">
+            <img src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/company/5234/applications/64b0e3acd9cab4c83a10d8f5/application/pictures/free-logo/original/xKxNTymSJ-MUJI-India.png" alt="MUJI" style="height: 35px;">
         </a>
 
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
+        <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#mujiNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mujiNavbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 
                 <li class="nav-item muji-dropdown">
-                    <a class="nav-link px-3" href="#">Clothing <i class="bi bi-chevron-down small-icon"></i></a>
+                    <a class="nav-link px-lg-3" href="#">Clothing <i class="bi bi-chevron-down small-icon"></i></a>
                     <div class="mega-menu">
-                        <div class="container-fluid py-4 px-5">
-                            <div class="row">
-                                <div class="col-md-2">
+                        <div class="container-fluid py-4 px-3 px-md-3 px-lg-4 px-xl-5">
+                            <div class="row g-3">
+                                <div class="col-lg-2 col-6">
                                     <h6 class="fw-bold">Women's Wear</h6>
                                     <ul class="list-unstyled small">
                                         <li><a href="#">Shirts & Blouses</a></li>
@@ -865,11 +977,11 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
                 </li>
 
                 <li class="nav-item muji-dropdown">
-                    <a class="nav-link px-3" href="#">Household <i class="bi bi-chevron-down small-icon"></i></a>
+                    <a class="nav-link px-lg-3" href="#">Household <i class="bi bi-chevron-down small-icon"></i></a>
                     <div class="mega-menu">
-                        <div class="container-fluid py-4 px-5">
-                            <div class="row">
-                                <div class="col-md-2">
+                        <div class="container-fluid py-4 px-3 px-md-3 px-lg-4 px-xl-5">
+                            <div class="row g-3">
+                                <div class="col-lg-2 col-6">
                                     <h6 class="fw-bold">Health & Beauty</h6>
                                     <ul class="list-unstyled small">
                                         <li><a href="#">Beauty & Makeup Storage</a></li>
@@ -985,11 +1097,11 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
                 
 
                 <li class="nav-item muji-dropdown">
-                    <a class="nav-link px-3" href="#">Storage Solutions<i class="bi bi-chevron-down small-icon"></i></a>
+                    <a class="nav-link px-lg-3" href="#">Storage Solutions<i class="bi bi-chevron-down small-icon"></i></a>
                     <div class="mega-menu">
-                        <div class="container-fluid py-4 px-5">
-                            <div class="row">
-                                <div class="col-md-2">
+                        <div class="container-fluid py-4 px-3 px-md-3 px-lg-4 px-xl-5">
+                            <div class="row g-3">
+                                <div class="col-lg-2 col-6">
                                     <h6 class="fw-bold">Acrylic Storage</h6>
                                 </div>
 
@@ -1010,11 +1122,11 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
                 </li>
 
                 <li class="nav-item muji-dropdown">
-                    <a class="nav-link px-3" href="#">Travel<i class="bi bi-chevron-down small-icon"></i></a>
+                    <a class="nav-link px-lg-3" href="#">Travel<i class="bi bi-chevron-down small-icon"></i></a>
                     <div class="mega-menu">
-                        <div class="container-fluid py-4 px-5">
-                            <div class="row">
-                                <div class="col-md-2">
+                        <div class="container-fluid py-4 px-3 px-md-3 px-lg-4 px-xl-5">
+                            <div class="row g-3">
+                                <div class="col-lg-2 col-6">
                                     <h6 class="fw-bold">Luggage & Bags</h6>
                                     <ul class="list-unstyled small">
                                         <li><a href="#">Luggage</a></li>
@@ -1052,9 +1164,9 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
                 <li class="nav-item muji-dropdown">
                     <a class="nav-link" href="#">New Arrivals<i class="bi bi-chevron-down small-icon"></i></a>
                     <div class="mega-menu">
-                        <div class="container-fluid py-4">
-                            <div class="row">
-                                <div class="col-md-2">
+                        <div class="container-fluid py-4 px-3 px-md-3 px-lg-4 px-xl-5">
+                            <div class="row g-3">
+                                <div class="col-lg-2 col-6">
                                     <h6 class="fw-bold">Clothing</h6>
                                     <ul class="list-unstyled small">
                                         <li><a href="#">Autumn/Winter'25 Collection</a></li>
@@ -1077,23 +1189,23 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
                 </li>
             </ul>
 
-            <div class="d-flex align-items-center">
-                <div class="input-group me-3" style="width: 280px;">
-                    <input type="text" class="form-control rounded-0 border-end-0 shadow-none" placeholder="What are you looking for?" style="font-size: 14px;">
+            <div class="d-flex flex-column flex-lg-row align-items-lg-center mt-3 mt-lg-0">
+                <div class="input-group mb-3 mb-lg-0 me-lg-3">
+                    <input type="text" class="form-control rounded-0 border-end-0 shadow-none bg-light" placeholder="What are you looking for?" style="font-size: 14px;">
                     <span class="input-group-text bg-light border-start-0 rounded-0">
                         <i class="bi bi-search"></i>
                     </span>
                 </div>
                 <a class="shop-bag-icon" href="#">
-        <div class="d-flex align-items-center gap-4 ms-3">
+        <div class="d-flex align-items-center gap-4 ms-lg-3 justify-content-center">
             <a class="user-icon" href="#">
-                <img src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/organization/6513dff2b47f991415b97010/theme/assets/user-icon.b8d002a45207bf09b94568bd35489ad3.png" alt="" style="height:25px">
+                <img src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/organization/6513dff2b47f991415b97010/theme/assets/user-icon.b8d002a45207bf09b94568bd35489ad3.png" alt="user" style="height:22px">
         </a>
         <a class="heart-icon" href="#">
-            <img src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/organization/6513dff2b47f991415b97010/theme/assets/wishlist-icon.475318a02c771374a9609e91130b9174.png" alt="" style="height:25px">
+            <img src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/organization/6513dff2b47f991415b97010/theme/assets/wishlist-icon.475318a02c771374a9609e91130b9174.png" alt="wishlist" style="height:22px">
         </a>
         <a class="shop-bag-icon" href="#">
-            <img src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/organization/6513dff2b47f991415b97010/theme/assets/cart-icon.76419afd0229bf8bca1ac89c1073c0f1.png" alt="" style="height:25px">
+            <img src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/organization/6513dff2b47f991415b97010/theme/assets/cart-icon.76419afd0229bf8bca1ac89c1073c0f1.png" alt="bag" style="height:22px">
         </a>
         </div>
             </div>
@@ -1103,7 +1215,8 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
 </div>
 
 
-<div class="video-container-top">
+<div class="container-fluid p-0">
+<div class="video-container-top" id="videoParent">
     <video id="muji-video-top" width="100%" autoplay="autoplay" loop muted playsinline preload="auto">
         <source src="https://cdn.fynd.com/v2/falling-surf-7c8bb8/fyprod/wrkr/company/5234/applications/64b0e3acd9cab4c83a10d8f5/theme/videos/free/original/theme-video-1768886715865.mp4" type="video/mp4">
     </video>
@@ -1115,6 +1228,7 @@ Ends smoothly and gently (X1,Y1.X2,Y2)*/
             </button>
         </div>
     </div>
+</div>
 </div>
 
 
